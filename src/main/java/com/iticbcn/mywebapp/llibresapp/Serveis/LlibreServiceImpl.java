@@ -3,6 +3,7 @@ package com.iticbcn.mywebapp.llibresapp.Serveis;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Collections;
 import java.util.Optional;
 import java.util.Set;
 
@@ -21,7 +22,8 @@ public class LlibreServiceImpl implements LlibreService {
 
   @Override
   public Set<Llibre> findAll() {
-    return repo.findAll();
+    Set<Llibre> result = repo.findAll();
+    return result != null ? result : Collections.emptySet();
   }
 
   @Override
@@ -45,17 +47,17 @@ public class LlibreServiceImpl implements LlibreService {
    */
   @Override
   public boolean validarISBN(String isbn) {
-    return isbn != null && isbn.matches("\\d{13}") && isbn.matches("^(?:\\d{12}[0-9X])$");
+      return isbn != null && isbn.matches("\\d{13}");
   }
 
   @Override
   public boolean validarDataPublicacio(String dataPublicacio) {
-    try {
-      LocalDate.parse(dataPublicacio, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-      return true;
-    } catch (DateTimeParseException e) {
-      return false;
-    }
+      try {
+          LocalDate.parse(dataPublicacio, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+          return true;
+      } catch (DateTimeParseException e) {
+          return false;
+      }
   }
 
   @Override

@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @Controller
-@RequestMapping("/llibres")
+@RequestMapping("/")
 public class LlibreController {
 
   @Autowired
@@ -39,6 +39,7 @@ public class LlibreController {
       data = LocalDate.parse(datapublicacio, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     } else {
       model.addAttribute("error", "Data de publicació no vàlida");
+      System.out.println("Data de publicació no vàlida");
       return "inserir";
     }
     if (!service.validarISBN(isbn)) {
