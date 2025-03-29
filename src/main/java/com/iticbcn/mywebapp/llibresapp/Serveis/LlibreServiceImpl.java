@@ -5,7 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Collections;
 import java.util.Optional;
-import java.util.Set;
+import java.util.ArrayList;
 
 import org.springframework.stereotype.Service;
 
@@ -21,24 +21,34 @@ public class LlibreServiceImpl implements LlibreService {
   }
 
   @Override
-  public Set<Llibre> findAll() {
-    Set<Llibre> result = repo.findAll();
-    return result != null ? result : Collections.emptySet();
+  public ArrayList<Llibre> findAll() {
+    ArrayList<Llibre> result = repo.findAll();
+    if (result == null || result.isEmpty()) {
+      System.out.println("El repositorio devolvió una colección vacía o nula");
+    }
+    return result;
   }
 
   @Override
   public Llibre findByTitol(String titol) {
-    return repo.findByTitol(titol);
+    return repo.findAll().stream()
+        .filter(llibre -> llibre.getTitol().equalsIgnoreCase(titol))
+        .findFirst()
+        .orElse(null);
   }
 
-  @Override
   public Optional<Llibre> findByIdLlibre(int id) {
-    return findByIdLlibre(id);
+    return repo.findById(id);
   }
 
   @Override
-  public Set<Llibre> findByTitolAndEditorial(String titol, String editorial) {
-    return repo.findByTitolAndEditorial(titol, editorial);
+  public ArrayList<Llibre> findByTitolAndEditorial(String titol, String editorial) {
+    ArrayList<Llibre> result = new ArrayList<>();
+    repo.findAll().stream()
+        .filter(llibre -> llibre.getTitol().equalsIgnoreCase(titol) &&
+            llibre.getEditorial().equalsIgnoreCase(editorial))
+        .forEach(result::add);
+    return result;
   }
 
   /**
@@ -47,17 +57,18 @@ public class LlibreServiceImpl implements LlibreService {
    */
   @Override
   public boolean validarISBN(String isbn) {
-      return isbn != null && isbn.matches("\\d{13}");
+    return isbn != null && isbn.matches("\\d{13}");
   }
 
   @Override
   public boolean validarDataPublicacio(String dataPublicacio) {
-      try {
-          LocalDate.parse(dataPublicacio, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-          return true;
-      } catch (DateTimeParseException e) {
-          return false;
-      }
+    System.out.println("Validant data de publicació: " + dataPublicacio);
+    try {
+      LocalDate.parse(dataPublicacio, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+      return true;
+    } catch (DateTimeParseException e) {
+      return false;
+    }
   }
 
   @Override

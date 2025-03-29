@@ -25,11 +25,11 @@
         </tr>
       </thead>
       <tbody>
-        <tr th:if="${llibres.empty}">
+        <tr th:if="${llibres == null or llibres.empty}">
           <td colspan="2">No hi ha llibres disponibles</td>
         </tr>
         <tr th:each="llibre:${llibres}">
-          <td><span th:text="${llibre.idLlibre}"></span></td>
+          <td><span th:text="${llibre.id}"></span></td>
           <td><span th:text="${llibre.titol}"></span></td>
           <td><span th:text="${llibre.autor}"></span></td>
           <td><span th:text="${llibre.editorial}"></span></td>

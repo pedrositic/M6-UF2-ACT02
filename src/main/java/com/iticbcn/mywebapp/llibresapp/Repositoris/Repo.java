@@ -1,6 +1,7 @@
 package com.iticbcn.mywebapp.llibresapp.Repositoris;
 
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.lang.NonNull;
@@ -13,9 +14,11 @@ public interface Repo extends CrudRepository<Llibre, Integer> {
 
   @Override
   @NonNull
-  Set<Llibre> findAll();
+  ArrayList<Llibre> findAll();
 
   Llibre findByTitol(String titol);
 
-  Set<Llibre> findByTitolAndEditorial(String titol, String editorial);
+  ArrayList<Llibre> findByTitolAndEditorial(String titol, String editorial);
+
+  Optional<Llibre> findById(int id);
 }

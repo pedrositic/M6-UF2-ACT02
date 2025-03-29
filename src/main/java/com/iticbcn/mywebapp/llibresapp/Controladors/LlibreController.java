@@ -15,7 +15,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
-import java.util.Set;
+import java.util.ArrayList;
 
 @Controller
 @RequestMapping("/")
@@ -59,7 +59,7 @@ public class LlibreController {
   }
 
   @PostMapping("/cercaid")
-  public String cercaId(@RequestParam(name = "idLlibre", required = false) String idLlibre, Model model) {
+  public String cercaId(@RequestParam(name = "idLlibre", required = true) String idLlibre, Model model) {
 
     int idLlib = 0;
     String message = "";
@@ -69,7 +69,7 @@ public class LlibreController {
       idLlib = Integer.parseInt(idLlibre);
       Optional<Llibre> llibre = service.findByIdLlibre(idLlib);
       if (llibre.isPresent()) {
-        model.addAttribute("llibre", llibre);
+        model.addAttribute("llibre", llibre.get());
       } else {
         message = "No hi ha cap llibre amb aquesta id";
         llibreErr = true;
@@ -134,7 +134,7 @@ public String logout(HttpSession session, SessionStatus status) {
   @GetMapping("/consulta")
   public String consulta(Model model) {
 
-    Set<Llibre> llibres = service.findAll();
+    ArrayList<Llibre> llibres = service.findAll();
 
     model.addAttribute("llibres", llibres);
 
@@ -151,7 +151,7 @@ public String logout(HttpSession session, SessionStatus status) {
   public String inputCerca(Model model) {
 
     Llibre llibre = new Llibre();
-    llibre.setIdLlibre(0);
+    llibre.setId(0);
     model.addAttribute("llibreErr", true);
     model.addAttribute("message", "");
     model.addAttribute("llibre", llibre);
