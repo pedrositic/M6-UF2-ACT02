@@ -2,11 +2,12 @@ package com.iticbcn.mywebapp.llibresapp.Serveis;
 
 import java.util.Optional;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.iticbcn.mywebapp.llibresapp.Model.Llibre;
 
 public interface LlibreService {
-  ArrayList<Llibre> findAll();
+  List<Llibre> findAll();
   Llibre findByTitol(String titol);
   Optional<Llibre> findByIdLlibre(int id);
   ArrayList<Llibre> findByTitolAndEditorial(String titol, String editorial);

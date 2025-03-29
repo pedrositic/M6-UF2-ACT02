@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import java.util.ArrayList;
 
@@ -21,11 +22,9 @@ public class LlibreServiceImpl implements LlibreService {
   }
 
   @Override
-  public ArrayList<Llibre> findAll() {
-    ArrayList<Llibre> result = repo.findAll();
-    if (result == null || result.isEmpty()) {
-      System.out.println("El repositorio devolvió una colección vacía o nula");
-    }
+  public List<Llibre> findAll() {
+    List<Llibre> result = repo.findAll();
+    System.out.println("Número de libros encontrados: " + result.size()); // Log temporal
     return result;
   }
 

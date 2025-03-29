@@ -16,6 +16,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/")
@@ -134,7 +135,7 @@ public String logout(HttpSession session, SessionStatus status) {
   @GetMapping("/consulta")
   public String consulta(Model model) {
 
-    ArrayList<Llibre> llibres = service.findAll();
+    List<Llibre> llibres = service.findAll();
 
     model.addAttribute("llibres", llibres);
 
